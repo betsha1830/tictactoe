@@ -4,9 +4,10 @@ class TicTacToe
         @board = [1,2,3,4,5,6,7,8,9]
         @count = 1
         @turn = 'O'
+        @game_over = false
     end
 
-    winning_move = [
+    @@winning_move = [
         [0,1,2], [3,4,5], [6,7,8],
         [0,3,6], [1,4,7], [2,5,8],
         [0,4,8], [2,4,6]
@@ -42,6 +43,10 @@ class TicTacToe
         puts "-------------------"
         puts "|  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |"
         puts " "
+    end
+
+    def game_ended?
+        
     end
 
 end
