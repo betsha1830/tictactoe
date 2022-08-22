@@ -2,7 +2,7 @@ require 'pry-byebug'
 class TicTacToe
     
     def initialize
-        @board = ['O',2,3,4,5,6,7,8,9]
+        @board = [1,2,3,4,5,6,7,8,9]
         @count = 1
         @turn = 'O'
         @game_ended = false
@@ -14,9 +14,7 @@ class TicTacToe
             draw_board()
             input = move()
             index = input_to_index(input)
-            valid_move?(input)
-            insert_move(index)
-            draw_board()
+            valid_move?(index)
             won?()
             tie?()
             change_turn()
@@ -48,15 +46,19 @@ class TicTacToe
     end
 
     def position_taken? (index)
-        !@board[index].instance_of?(Integer)
+        !@board[index].instance_of?(Integer) || @board[index].nil?
     end
 
-    def valid_move? (move)
-        until position_taken?(input_to_index(move)) || input_to_index(move).between?(0,8)
-            puts "Wrong input. please enter a valid input"
-            draw_board()
-            move()
-        end
+    def valid_move? (index)
+       if position_taken?(index) || !index.between?(0,8)
+        puts "Wrong input. Please enter a valid input."
+        draw_board()
+        index = move() - 1
+        valid_move?(index)  
+       else
+        insert_move(index)
+        true
+       end
     end
 
     def draw_board
@@ -74,7 +76,8 @@ class TicTacToe
             position_taken?(move[0]) && @board[move[0]] == @board[move[1]] && @board[move[0]] == @board[move[2]]  
         end
         if winning_move 
-             @game_ended = true 
+             @game_ended = true
+             draw_board() 
              puts "Congratulations! #{@turn} won the game."
         else
             @game_ended = false
@@ -82,8 +85,9 @@ class TicTacToe
     end
 
     def tie?
-        if @board.all?(Integer)
+        if @board.all?(String)
             @game_ended = true
+            draw_board()
             puts "Game ended in a tie."
         end
     end
