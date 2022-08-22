@@ -24,7 +24,7 @@ class TicTacToe
     end
 
     def insert_move (move)
-        @board[move]
+        @board[move] = @turn
     end
 
     def input_to_index (move)
@@ -64,6 +64,3 @@ class TicTacToe
     end
 
 end
-
-test = TicTacToe.new
-test.draw_board
